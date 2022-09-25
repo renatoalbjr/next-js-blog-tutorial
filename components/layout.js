@@ -57,7 +57,7 @@ export default function Layout({ children, home, className }) {
                 />
               </a>
             </Link>
-            <h2 className="text-2xl my-4">
+            <h2 className="text-2xl font-bold my-4">
               <Link href="/">
                 <a className="pointer-events-auto text-inherit">{name}</a>
               </Link>
