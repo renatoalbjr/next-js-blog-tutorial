@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import Script from "next/script";
 import "../styles/global.css";
 import "../styles/reset.scss";
+import initParticles from "../utils/particlesWrapper";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,10 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         strategy="lazyOnload"
         onLoad={() => {
           console.log("Script loaded.");
-          Particles.init({
-            selector: ".background",
-            connectParticles: true,
-          });
+          initParticles(".background", true);
         }}
         onError={() => {
           console.log("Error loading the script");
