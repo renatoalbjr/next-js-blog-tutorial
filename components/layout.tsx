@@ -1,11 +1,16 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { HTMLProps, ReactNode } from "react";
 
 const name = "Your Name";
 export const siteTitle = "Next.js Sample Website";
 
-export default function Layout({ children, home, className }) {
+interface props extends HTMLProps<HTMLDivElement> {
+  home?: boolean;
+}
+
+export default function Layout({ children, home, className }: props) {
   return (
     <div
       className={

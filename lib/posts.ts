@@ -10,20 +10,31 @@ function getPostID(filename) {
   return filename.replace(/\.md$/, "");
 }
 
-export function getAllPostsData() {
+export interface IPost {
+  id: string;
+  content: string;
+  title: string;
+  date: string;
+}
+
+export function getAllPostsData(): IPost[] {
   const filenames = fs.readdirSync(postsDir);
   const allPosts = filenames.map((filename) => {
     const id = getPostID(filename);
 
     const fileContent = fs.readFileSync(path.join(postsDir, filename), "utf-8");
 
-    const post = matter(fileContent);
+    const { data, content } = matter(fileContent);
+    const { title, date } = data;
 
-    return {
+    const post: IPost = {
       id,
-      ...post.data,
-      content: post.content,
+      title,
+      date,
+      content,
     };
+
+    return post;
   });
 
   return allPosts.sort(({ date: a }, { date: b }) => {
@@ -37,21 +48,24 @@ export function getAllPostsData() {
   });
 }
 
-export function getAllPostsIds() {
+export function getAllPostsIds(): string[] {
   const filenames = fs.readdirSync(postsDir);
   return filenames.map((filename) => getPostID(filename));
 }
 
-export async function getPostData(id) {
+export async function getPostData(id: string) {
   const fileContent = fs.readFileSync(path.join(postsDir, `${id}.md`), "utf-8");
 
-  const post = matter(fileContent);
-  const contentHTML = await remark().use(html).process(post.content);
+  const matterResult = matter(fileContent);
+  const contentHTML = await remark().use(html).process(matterResult.content);
   const content = contentHTML.toString();
 
-  return {
+  const post: IPost = {
     id,
     content,
-    ...post.data,
+    title: matterResult.data.title,
+    date: matterResult.data.date,
   };
+
+  return post;
 }

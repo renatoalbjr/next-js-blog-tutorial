@@ -1,16 +1,9 @@
-import Head from "next/head";
+import { AppProps } from "next/app";
 import Script from "next/script";
-import { useEffect } from "react";
 import "../styles/global.css";
 import "../styles/reset.scss";
 
-function MyApp({ Component, pageProps }) {
-  // useEffect(() => {
-  //   Particles.init({
-  //     selector: ".background",
-  //     connectParticles: true,
-  //   });
-  // }, []);
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Script

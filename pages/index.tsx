@@ -1,3 +1,4 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
@@ -47,11 +48,11 @@ export default function Home({ posts }) {
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllPostsData();
   return {
     props: {
       posts,
     },
   };
-}
+};
